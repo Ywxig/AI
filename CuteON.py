@@ -8,7 +8,7 @@ class Get_:
         for i in content_l:
             text = i.split("::")
             if text[0] == "public" and text[1] == str(nameString):
-                return  text[2]
+                return text[2]
             else:
                 pass
 
