@@ -1,6 +1,6 @@
 import discord
 import CuteON
-import Zoe
+import sends
 
 class MyClient(discord.Client):
     async def on_ready(self):
@@ -14,7 +14,7 @@ class MyClient(discord.Client):
         if message.content == message.content:
             mes = (message.content).lower()
             mes_list = mes.split()
-            await message.channel.send(Zoe.main(mes_list))
+            await message.channel.send(sends.main(mes_list))
 
 intents = discord.Intents.default()
 client = MyClient(intents=intents)
