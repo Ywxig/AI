@@ -47,7 +47,3 @@ client.run(str(CuteON.Get_.getLine(file="Config.sws", nameString="token_Zoe")))
 print(BotHubAPI.Config.Get(name="Zoe"))
 client.run(BotHubAPI.Config.Get(name="Zoe"))
 """
-
-"""
-client.run("ODU0MjQ3MDk2Mzg2NDUzNTA0.GI-hsg.FUBJTFoT1WLITT423g3W98CJ5KjDRP0XtGrJuA")
-"""
