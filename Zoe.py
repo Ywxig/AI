@@ -1,97 +1,43 @@
 import CuteON
 import random
-"""
+import Command_runer
+import pymorphy2
 
-это модуль с реализацией всех алгоритмов для Зои. Данный модуль используется исключтельно в качестве оброботчика сообщений от юзера
+def help():
+    return "это модуль с реализацией всех алгоритмов для Зои. Данный модуль используется исключтельно в качестве оброботчика сообщений от юзера"
 
-"""
-emoj = (CuteON.Get_.getLine("BaseData.sws", "emoj")).split(",")# Это мпимок всех эводжи который может использовать бот
+emoj = (CuteON.Get_.getLine("education/BaseData.sws", "emoj")).split(",")# Это мпимок всех эводжи который может использовать бот
 
-command_riester = ["помащь"]
-
-hello = (CuteON.Get_.getLine("BaseData.sws", "hello")).split(",")
-bay = (CuteON.Get_.getLine("BaseData.sws", "bay")).split(",")
-predlog = (CuteON.Get_.getLine("BaseData.sws", "predlog")).split(",")
-too = (CuteON.Get_.getLine("BaseData.sws", "too")).split(",")
-
-status_good=(CuteON.Get_.getLine("exe_send.sws", "status_good")).split(",")
-status_bad=(CuteON.Get_.getLine("exe_send.sws", "status_bad")).split(",")
-status_neitral=(CuteON.Get_.getLine("exe_send.sws", "status_neitral")).split(",")
-
-Words_duing = (CuteON.Get_.getLine("BaseData.sws", "Words_duing")).split(",")
-qation_words = (CuteON.Get_.getLine("BaseData.sws", "qation_words")).split(",")
-that_good=(CuteON.Get_.getLine("exe_send.sws", "that_good")).split(",")
-
-
-class Say:
-
-    def Status(int_good:list, int_bad:list, weight_good:list=range(10),  weight_bad:list=range(10)):
-        arr = []
-        i = 0
-        while i < len(int_good):
-            arr.append(((int_good[i] * weight_good[i]) + (int_bad[i] * weight_bad[i]))/2)
-            i += 1
-
-        res = sum(arr) / len(arr)
-
-        return res
-
-
-    def Sand(ctxs = ["Obj=>PosSen=>emoj", "PosSen=>Obj=>emoj"], obj = [""], postfix_sentenc : list = [None]):
-        renge = random.randint(0, len(ctxs) - 1)
-        Say.Struct(ctxs[renge], obj=obj, postfix_sentenc=postfix_sentenc)
-
-        
-
-    def Struct(ctx, obj=None, postfix_sentenc : list = [None] ):
-
-        emoj = (CuteON.Get_.getLine("BaseData.sws", "emoj")).split(",")
-
-        Insert_word = []
-
-        """        
-        Данный метод отвечает за создани
-        структуры ответов.
-
-        Если мы оратимся к лингвистике то мы узнаем что
-        в лингвистике описаны все структуры предложений
-
-        Obj - Придмет о ктором говорится в предложение,
-        евляется сущ. доесть таки слова как (привет, утро, т.п)
-
-        PosSen - Простое предложения для завершения фразы,
-        примеры (как дела, что делаешь, какие планы)
-
-        Ins - вводное слова или конструкция прмер
-        (во-первых, однажды)
-        """
-        try:
-
-            arr = []
-
-            for item in ctx.split("=>"):
-                if item == "Obj":
-                    arr.append(obj[random.randint(0, len(obj)-1)])
-
-                if item == "PosSen":
-                    arr.append(postfix_sentenc[random.randint(0, len(postfix_sentenc)-1)])
-
-                if item == "Ins":
-                    arr.append(Insert_word[random.randint(0, len(Insert_word)-1)])
-
-                if item == "emoj":
-                    arr.append(emoj[ random.randint( 0, (len(emoj) - 1) ) ])
-
-                if item == "mersi":
-                    arr.append(emoj[ random.randint( 0, (len(emoj) - 1) ) ])
-
-            print(obj[random.randint(0, len(obj)-1)])
-        except:
+def Filter(arr=[], target=[]):
+    ARR = []
+    for i in arr:
+        if i in target:
             pass
-        return ' '.join(arr)
-
+        else:
+            ARR.append(i)
+    return ARR
 
 class Generator:
+
+    def random_message(messages=[]):
+        r = random.randint(0, len(messages) - 1)
+        return messages[r]
+
+    def Message(message_exe="hello world", word_list=[]):
+        for i in message_exe.split():
+            if i in CuteON.Get_.getAll("BaseData.sws"):
+                pass
+
+            
+    def defain(text, key_word, def_=help()):
+        for i in text:
+            if Zoe_Word(i, [key_word]) >= 55:
+                if def_ == "" or def_ == None:
+                     return "Ошибка я немагу исполнить фунцию"
+                else:
+                    return def_
+            else:
+                pass
 
     def Command(content, ctx="помащь", arguments : list = None, count_arguments : int = 0):
         """
@@ -101,25 +47,7 @@ class Generator:
         ты указываешь в arguments используя 
         алгоритм распознования слов
         """
-        arr_argument_for_return = []
-
-        for i in content:
-
-            if Zoe_algorithm_2(i, [ctx]) >= 55:
-
-                if Zoe_algorithm_2(i, arguments) >= 55:
-                    arr_argument_for_return.append(i)
-
-                else:
-                    pass
-
-        if arr_argument_for_return == [] or arr_argument_for_return == None:
-            print(arr_argument_for_return)
-            return "Ошибка я немагу исполнить фунцию"
-        
-        else:
-            print(arr_argument_for_return)
-            return arr_argument_for_return
+        pass
 
 
     def Send(werd_exemples, simple_sentenses):
@@ -136,89 +64,151 @@ class Generator:
 
         return werd_exemples[rand] + " " + simple_sentenses[random.randint(0, len(simple_sentenses) - 1)] + " " + E
 
-    def Twsted(word, cut_shar, emoj=emoj):
-        word_arr = list(word)
-        score = 0
-        while score < cut_shar:
-            del word_arr[len(word_arr)]
-            score += 1
-        return "".join(word_arr)
-
-
-
-def Zoe_algorithm_2(Word, word_set):
-    print(word_set)
+def Zoe_Word(Word, word_set, messge="Сообщение"):
+    data_set = CuteON.Get_.getAll("Data Set/ds.sws")
+    anser_set = CuteON.Get_.getAll("Data Set/anser.sws")
+    c = 0
     arr = []
     for word_ in word_set:
-        cout = 0
+        REPIAT_LETER = 0
         for i in Word:
-            if i in list(word_):
-                cout += 1
-        res = (cout * 100) / len(word_)   
-        arr.append(round(res))
-    print(arr)
-    return max(arr)    
+            try:
+                if i == list(str(word_[0]))[list(Word).index(i)]:
+                    REPIAT_LETER += 1
+                else:
+                    pass
+                c += 1       
+            except:
+                return Generator.Markov(messge)
+        res = (REPIAT_LETER * 100)/1
+        arr.append(res)
+    return str(anser_set[arr.index(max(arr))][0])
 
+def keywords(sentence):
+    morph = pymorphy2.MorphAnalyzer()
+    words = sentence.split()
+    keywords = []
+    for word in words:
+        parsed_word = morph.parse(word)[0]
+        if 'NOUN' in parsed_word.tag or 'ADJF' in parsed_word.tag:
+            keywords.append(parsed_word.normal_form)
+    return keywords
 
-def main(message=[]):
+class Search:
+
+    def Youtube(List):
+
+        task = '+'.join(List)
+        s = 'https://www.youtube.com/results?search_query=' + task
+        return s
+
+    def Googol(List):
+
+        task = '+'.join(List)
+        s = 'https://www.google.com/search?q=' + task
+        return s
+
+    def Yandex( List):
+        task = '%20'.join(List)
+        s = 'https://yandex.ru/yandsearch?clid=202826&text=' + task
+        return s
+
+def return_commad(message):
     """
+    данная функция по конструкции комманды исполняет её
+    некоторые комманды уже сделаны пользователь может
+    вводить или изменять существующие комманды.
+    """
+    prompt=Command_runer.run(message)
     
-    функция main является рамспознователем сообщения
-    пользователя. Используя мативатические фопрмулы
-    и лагические блоки алгоритм понимает на сколько
-    слово похоже на то которое мы передали как пример
+    if prompt == "":
+        return "No is prompt"
+    else:
+        return prompt
 
-    """
-    for word in message:
+class Generator:
 
-        """
-        В данном цикле и происходит вся магия
-        Если необщодимо добавить новую ветку в разоворе,
-        то нужно добавить логический блок и настроить его
-
-        Но если мы говорим о коммандах для исполения
-        то их нужно создовать по другой схеме.
-
-        Вжно: если есть приорететные задачи то 
-        их нужно ставить выше чем другие задачи
-        их можно расставлять по честоте использования,
-        или регулировать числа для прохождения комманды
-        """
-        
-        if Zoe_algorithm_2(word, hello) >= 55:
-            return Generator.Send(hello, (CuteON.Get_.getLine("BaseData.sws", "simple_sentens_hello")).split(","))
-
-        if Zoe_algorithm_2(word, bay) >= 76:
-            return Generator.Send(bay, (CuteON.Get_.getLine("BaseData.sws", "simple_sentens_bay")).split(","))
-
-        if Zoe_algorithm_2(word, status_good) >= 55:
-            print(Say.Status([10, 2, 3], [1, 2, 9]))
-            return Generator.Send("", (CuteON.Get_.getLine("BaseData.sws", "simple_sentens_")).split(","))
-
-        if Zoe_algorithm_2(word, predlog) >= 55:
-            for word_2 in message:
-                if Zoe_algorithm_2(word_2, too) >= 55:
-                    return Say.Struct(ctx="PosSen=>emoj", postfix_sentenc=(CuteON.Get_.getLine("exe_send.sws", "status_good")).split(","))
-
-        
-        if Zoe_algorithm_2(word, qation_words) >= 55:
-            for word_2 in message:
-                if Zoe_algorithm_2(word_2, Words_duing) >= 55:
-                    status = Say.Status([10, 2, 3], [1, 2, 9])
-                    if status > 0:
-                        return Say.Struct(ctx="PosSen=>emoj", postfix_sentenc=(CuteON.Get_.getLine("exe_send.sws", "status_good")).split(","))
-                    if status < 0:
-                        return Say.Struct(ctx="PosSen=>emoj", postfix_sentenc=(CuteON.Get_.getLine("exe_send.sws", "i_can_help")).split(","))
-                    else:
-                        return Say.Struct(ctx="PosSen=>emoj", postfix_sentenc=(CuteON.Get_.getLine("exe_send.sws", "that_good")).split(","))
-                
-#       """
-        # пример как можно реальзовать комманду для Зои
-        if Zoe_algorithm_2(word, ['выполни', "исполни"]) >= 55 or Zoe_algorithm_2(word, command_riester) >= 55:
-            if Zoe_algorithm_2(word, ["помащь"]) >= 55:
-                return "Хеай, я поммошник Зои версии 4.0"
-#       """
-
+    def generate_text(text : str, keywords : list, order=1, length=5):
+        words = text.split()
+        markov_dict = {}
+        # Создаем словарь цепей Маркова
+        for i in range(len(words) - order):
+            key = tuple(words[i:i+order])
+            value = words[i+order]
+            if key in markov_dict:
+                markov_dict[key].append(value)
+            else:
+                markov_dict[key] = [value]
+        # Выбираем случайный ключ из словаря
+        possible_keys = [key for key in markov_dict.keys() if all(keyword in key for keyword in keywords)]
+        if possible_keys:
+            current_key = random.choice(possible_keys)
         else:
-            return "Я не понимаю что ты мне говоришь"
+            current_key = random.choice(list(markov_dict.keys()))
+        # Генерируем текст на основе цепей Маркова
+        sentence = list(current_key)
+        for i in range(length - order):
+            if current_key in markov_dict:
+                current_word = random.choice(markov_dict[current_key])
+            else:
+                current_word = random.choice(list(markov_dict.keys()))
+            sentence.append(current_word)
+            current_key = tuple(sentence[-order:])
+        count = 0
+        delete_word=[]
+        for i in sentence:
+            if i == sentence[count] and i in delete_word:
+                del sentence[count] 
+            else:
+                delete_word.append(sentence[count])
+            count += 1
+        print("Delete words is =",delete_word)
+        delete_word=[]
+        return " ".join(sentence)
 
+    def Markov(text, order=2):
+        length = len(text.split())
+        t = text.split()[0]
+        text = CuteON.Read_.Read("education/text.txt")
+        words = text.split()
+        markov_dict = {}
+        for i in range(len(words) - order):
+            key = tuple(words[i:i+order])
+            value = words[i+order]
+            if key in markov_dict:
+                markov_dict[key].append(value)
+            else:
+                markov_dict[key] = [value]
+
+        if markov_dict:
+            current_key = random.choice(list(markov_dict.keys()))
+        else:
+            return 'None'
+        sentence = list(current_key)
+        for i in range(length - order):
+            current_word = random.choice(markov_dict[current_key])
+            sentence.append(current_word)
+            current_key = tuple(sentence[-order:])
+
+        return " ".join(sentence)
+
+
+def Zoe_Sentenses(message, file_data_set="Data Set/ds.sws", file_ansers="Data Set/anser.sws"):
+    data_set = CuteON.Get_.getAll(file_data_set)
+    anser_set = CuteON.Get_.getAll(file_ansers)
+    for i in data_set:
+        A = len(str(anser_set[data_set.index(i)]).split("|"))
+        MS = len(str(message).split())
+        
+        if MS <= 1:
+            if A > 1:
+                return str(anser_set[data_set.index(i)][0]).split("|")[random.randint(0, len(str(anser_set[data_set.index(i)][0]).split("|") ) - 1)]
+            else:
+                print(anser_set[data_set.index(i)])
+                return str(anser_set[data_set.index(i)][0])
+        if MS > 1 and message == str(i[0]):
+            if A > 1:
+                return str(anser_set[data_set.index(i)][0]).split("|")[random.randint(0, len(str(anser_set[data_set.index(i)][0]).split("|") ) - 1)]
+            else:
+                return str(anser_set[data_set.index(i)][0])
+    return Generator.Markov(message)
