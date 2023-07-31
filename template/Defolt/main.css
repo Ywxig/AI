@@ -1,0 +1,103 @@
+
+:root {
+    --primary-color: #7289da;
+    --secondary-color: #9c27b0;
+    --light-color: #f5f5f5;
+    --dark-color: #424242;
+    --text-color: #efe;
+    --bg-list: #303030;
+    --font-size: 20px;
+    --radius: 15px;
+  }
+
+body{
+    padding: 5px;
+}
+
+  /* Стиль для заголовков */
+  h1, h2, h3 {
+    font-weight: bold;
+    color: var(--primary-color);
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-size: 16px;
+    line-height: 1.5;
+    margin-right: 20px;
+  }
+
+  a:hover{
+    color: var(--text-color);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+.ico{
+  width: 50px;
+  height: 50px;
+  border: 0px;
+}
+.ico:hover{
+  border: var(--primary-color) 5px solid;
+  width: 51px;
+  height: 51px;
+  border: 0px;
+}
+
+img{
+  width: 100%;
+  height: 100%;
+  border: solid var(--primary-color) 3px;
+  border-radius: var(--radius);
+}
+
+.button {
+  display: block;
+  padding: 10px 20px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: var(--primary-color);
+  border-radius: 10px;
+  
+}
+
+
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  grid-gap: 5px;
+}
+
+.card {
+  padding: 5px;
+}
+
+.widget{
+    border: 0px;
+    border-radius: 15px;
+    background-color: var(--bg-list);
+    padding: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text-color);
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.time-place{
+    font-size: 82px;
+}
+
+.temp-place{
+    font-size: 36px;
+    background: rgb(131,58,180);
+    background: linear-gradient(75deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+    border: 0px;
+    border-radius: var(--radius);
+    color: #fff;
+}

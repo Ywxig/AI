@@ -1,17 +1,31 @@
-from Zoe import *
-import CuteON
+import ChatBot
+import time
+
+match_percentage = 0.88
 
 def main(message=[]):
-    for word in message:
+        start = time.time()
+        print(message)
+        add = ""
+        for i in message:
+                if ChatBot.is_word("погода", i) >= match_percentage:
+                        add = ChatBot.Water_sys.All('88c77e859289463928b17b24f2f7ea99')
 
-        
-        if len(message) <= 1:
-            data_set = CuteON.Get_.getAll("Data Set/ds.sws")
-            return Zoe_Word(str(message[0]), data_set, messge=" ".join(message))
-        if len(message) > 1:
-            #return Zoe_Sentenses(" ".join(message))
-            return Generator.generate_text(text = CuteON.Read_.Read("education/text.txt"), keywords = keywords(" ".join(message)))
-           
+                if ChatBot.is_word("выключи", i) > match_percentage:
+                        ChatBot.ShootDown()
+
+                if ChatBot.is_word("найди", i) > match_percentage:
+                        add = ChatBot.Search.Yandex( message)
+
+                if ChatBot.is_word("открой", i) > match_percentage:
+                        add = ChatBot.App.open( message[message.index(i) + 1] )
+
+
+        respons = ChatBot.Generator.wandering_drunk_modified(" ".join(message), "education/text.txt", adaptive_respons_size=True, file_for_hybrid="education/hybrid.txt") + "\n" +  add
+
+        if respons == '' or respons == None:
+                return "Я не знаю что сказать..."
         else:
-            return Generator.generate_text(text = CuteON.Read_.Read("education/text.txt"), keywords = keywords(" ".join(message)))
+                return respons
 
+ 

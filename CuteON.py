@@ -67,3 +67,5 @@ class Write_:
         file = open(file, "a")
         if text.split()[0] == "public" or text.split()[0] == "private":
             file.write(text)
+
+
