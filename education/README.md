@@ -8,7 +8,7 @@ You can enter a variety of text in the files, here is an example from the site h
 * ___text.txt___ - File with basic text resources. This is the text from which the response to the message will be obtained.
   >You can enter any text. But if you told the algorithm to collect only sentences with keywords, then use the
   >
-  >~`#KEYWORDS setting <Words are merged separated by commas>`~
+  >`#KEYWORDS setting <Words are merged separated by commas>`
   ```
   #KEYWORDS Язык,программирования
   Язык программирования С++ представляет высокоуровневый компилируемый язык программирования
@@ -39,6 +39,7 @@ You can enter a variety of text in the files, here is an example from the site h
   float::chance_choosing_main_word::0.4
   float::chance_teleport::0.1
   float::chance_use_message::0.45
+
   float::chance_use_next_word::0.42
   float::match_percentage::0.78
   float::chance_add_to_banlist::0.7
