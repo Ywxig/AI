@@ -47,4 +47,4 @@ For changing data in files with the extension . sws responds to the first island
 ## Changing text data
 To quickly change text data, use the second island to change text files or to create others. In the upper field, enter the name or address before the file, then you can enter the entire contents of the file in the text field
 
->_At the moment, the panel, like the bot, only supports the ___Russian language___
+>_At the moment, the panel, like the bot, only supports the ___Russian language____
