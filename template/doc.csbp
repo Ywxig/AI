@@ -1,0 +1,14 @@
+@ file templates/doc.html
+html {
+doc.start
+
+CSS.start
+
+CSS.element css/root.css
+CSS.element css/buttons.css
+CSS.element css/forms.css
+
+CSS.end
+
+doc.end
+}

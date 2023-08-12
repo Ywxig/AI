@@ -1,0 +1,20 @@
+@ file templates/index.html
+html {
+doc.start
+
+CSS.start
+
+CSS.element css/root.css
+CSS.element css/buttons.css
+CSS.element css/forms.css
+CSS.element css/radioButtons.css
+
+CSS.end
+
+HTML.form.parameters widgets/parameters.html
+HTML.form.file widgets/file.html
+
+doc.end
+}
+
+build html file

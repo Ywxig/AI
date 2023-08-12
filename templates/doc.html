@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+
+
+<style>
+:root{
+    --primary-color: #00dc8c;
+    --text-color: #131313;
+    --background-color: #36393e;
+    --card-bg: #46493e;
+    --font: Arial, Helvetica, sans-serif;
+    --acttent-text: #28a08c;
+    --hight-light: #28a08cff;
+    --head-color: #141414;
+    --input-text-color: #ebebeb;
+    --margin: 2%;
+    --radius: 10px;
+}
+
+body{
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: var(--font);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 3fr));
+    grid-gap: 20px;
+}
+
+.dev{
+    width: 50px;
+    height: 50px;
+}
+
+.island{
+    border-radius: 10px;
+}
+
+.futer{
+    margin: 0 auto;
+    max-width: 400px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    background: linear-gradient(171deg, var(--primary-color) 0%, var(--acttent-text) 100%);
+    height: 200px;
+}
+.btn-control{
+  font-size: 30px;
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  width: 80px;
+  height: 80px;
+  border: none;
+}
+
+.btn-control:hover{
+  font-size: 30px;
+  cursor: pointer;
+  background-color: var(--background-color);
+  box-shadow: 0px 0px 10px var(--hight-light);
+  color: var(--text-color);
+  width: 80px;
+  height: 80px;
+  border: none;
+}
+
+.mouse{
+  font-size: 20px;
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  width: 150px;
+  height: 45px;
+  margin: 5px;
+}
+
+.mouse:hover{
+  font-size: 20px;
+  cursor: pointer;
+  background-color: var(--background-color);
+  box-shadow: 0px 0px 10px var(--hight-light);
+  color: var(--text-color);
+  width: 150px;
+  height: 45px;
+  margin: 5px;
+}
+
+.mouse-controller{
+  background-color: #36393e;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  margin: 2%;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border-radius: 10px;
+}
+
+.refresh-button{
+  font-size: 24px;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  margin-bottom: 2px;
+  padding: 20px;
+  width: 100%;
+}
+
+.refresh-button:hover {
+  background-color: var(--dark-color);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+button {
+  font-size: 24px;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  margin-bottom: 2px;
+}
+
+button:hover {
+  background-color: var(--dark-color);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.button-place{
+  background-color: var(--background-color);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  margin: 2%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border-radius: 10px; 
+}
+
+
+.volume-button {
+  font-size: 22px;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  margin-bottom: 2px;
+}
+
+.scroll-button {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  width: 140px;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  margin: 5px;
+}
+
+.scroll-button:hover {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: var(--background-color);
+  box-shadow: 0px 0px 10px var(--hight-light);
+  color: var(--text-color);
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  margin: 5px;
+}
+
+.media-button{
+  font-size: 20px;
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  border: none;
+}
+
+.media-button:hover{
+  font-size: 20px;
+  cursor: pointer;
+  background-color: var(--background-color);
+  box-shadow: 0px 0px 10px var(--hight-light);
+  color: var(--text-color);
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  border: none;
+}
+
+.media-place{
+  background-color: var(--background-color);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  margin: 5%;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  border-radius: 10px; 
+  line-height: 2;
+}
+
+.off{
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  background-color: #f00;
+  color: var(--text-color);
+  margin-right: 15px;
+  width: 42px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+}
+
+.ico{
+  width: 30px;
+  height: 30px;
+}
+
+.label{
+  width: 50px;
+}
+
+/* Стиль для форм */
+form {
+  max-width: 400px;
+}
+
+form label {
+  margin-bottom: 10px;
+  color: var(--text-color);
+  font-weight: bold;
+  font-size: 16px;
+}
+
+form input[type="text"], form input[type="email"], form select {
+  width: 80%;
+  border-radius: 4px;
+  font-family: var(--font);
+  font-size: 18px;
+  padding: 10px;
+  border: 1px solid var(--primary-color);
+  color: var(--input-text-color);
+  background-color: var(--dark-color);
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+form input[type="submit"] {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  color: var(--input-text-color);
+  background-color: var(--primary-color);
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+  transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+
+form input[type="submit"]:hover {
+  background-color: var(--dark-color);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.input{
+  margin: 0 auto;
+  max-width: 400px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 5px;
+}
+
+textarea {
+  width: 80%;
+  height: 90%;
+  resize: none;
+  border-radius: 4px;
+  font-family: var(--font);
+  font-size: 18px;
+  padding: 10px;
+  border: 1px solid var(--primary-color);
+  color: var(--input-text-color);
+  background-color: var(--dark-color);
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+</style>
+<form action="/parameters" method="POST">
+<div class="island">
+    <div class="input">
+        <h2>Укажите значение и имя</h2>
+
+        <div class="form_radio_group">
+            <div class="form_radio_group-item">
+                <input id="radio-1" type="radio" name="radio" value="int" checked>
+                <label for="radio-1">int</label>
+            </div>
+            <div class="form_radio_group-item">
+                <input id="radio-2" type="radio" name="radio" value="float">
+                <label for="radio-2">float</label>
+            </div>
+            <div class="form_radio_group-item">
+                <input id="radio-3" type="radio" name="radio" value="str">
+                <label for="radio-3">str</label>
+            </div>
+        </div>
+
+        <br>
+
+        <label for="paph">Путь\имя файла</label>
+        <input type="text" name="paph">
+        <br>
+        <label for="name">Имя параметра</label>
+        <input type="text" name="name">
+
+        <label for="value">Занчение параметра</label>
+        <input type="text" name="value">
+
+        <button type="submit">Сохранить</button>
+    </div>
+</div>
+
+
+</form>
+</body>
+</html>

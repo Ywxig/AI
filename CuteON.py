@@ -3,7 +3,6 @@ type_int_action = ("int")
 type_list_action = ("list", "rgb", "rgba", "diolog", "matrix")
 type_float_action = ("float")
 WebFile = ('html', 'css', 'js')
-coment = ("//", "№")
 
 import time
 import math
@@ -139,33 +138,22 @@ class Read_:
                     return int(text[2])
                 if text[0] in type_float_action:
                     return float(text[2])
-                if text[0] == "bool":
-                    return bool(text[2])
 
     def readAll(file) -> dict:
-        file = open(file, "r", encoding="utf-8")
+        file = file = open(file, "r", encoding="utf-8")
         content = file.read()
         content_l = content.split("\n")
         arr = {}
-        count_line = 0
         for i in content_l:
-            if i != "":
-                text = i.split("::")
-                if text[0] in type_list_action:
-                    arr[text[1]] = text[2].split(",")
-                if text[0] in type_str_action:
-                    arr[text[1]] = str(text[2])
-                if text[0] in type_int_action:
-                    arr[text[1]] = int(text[2])
-                if text[0] in type_float_action:
-                    arr[text[1]] = float(text[2])
-                if text[0] == "bool":
-                    arr[text[1]] = bool(text[2])
-                if text[0] == "print":
-                    print(text[1])
-                if text[0] in coment:
-                    pass
-            count_line += 1
+            text = i.split("::")
+            if text[0] in type_list_action:
+                arr[text[1]] = text[2].split(",")
+            if text[0] in type_str_action:
+                arr[text[1]] = str(text[2])
+            if text[0] in type_int_action:
+                arr[text[1]] = int(text[2])
+            if text[0] in type_float_action:
+                arr[text[1]] = float(text[2])
         return arr
 
 class Write_:
