@@ -30,3 +30,19 @@ To configure the bot, go to the config.sws file and change the Token parameter t
 * __allowed_array_length__ - If the value of the unused array is greater than it will be reset to the standard value of the array
 
 To customize the algorithm, you can change the parameters in the education/parameters.sws file, where you can specify your bot settings
+
+# Admin panel
+It's not a big Flask application for configuring bot parameters. Since constantly making changes to files is long and not convenient, but thanks to this simple panel, I can change the generation parameters and bot settings through the local network where the host (or server) and the client device are located
+
+> _Important: both devices must be on the local network, otherwise you will not be able to connect to the host and change the state of the files_
+
+# Interface
+
+When entering the panel, there will be two small islands for setting up the bot. They can be swapped through the configuration file, as well as changing their CSS styles, though only through files.
+
+## Change data
+
+For changing data in files with the extension . sws responds to the first island, you can choose the type of data you want to enter, then fill in the address to the file, the line name, and the data itself that needs to be changed
+
+## Changing text data
+To quickly change text data, use the second island to change text files or to create others. In the upper field, enter the name or address before the file, then you can enter the entire contents of the file in the text field
