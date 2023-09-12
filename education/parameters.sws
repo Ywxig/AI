@@ -1,0 +1,17 @@
+bool::show_dict_PARAMETERS::False
+//
+//
+float::chance_choosing_full_pair::0.59
+float::chance_choosing_main_word::0.4
+float::chance_teleport::0.1
+float::chance_use_message::0.45
+float::chance_use_next_word::0.42
+float::match_percentage::0.78
+float::chance_add_to_banlist::0.7
+float::Probability_descent_for_use_message::0.06
+int::max_size_respons::5
+int::allowed_array_length::6
+int::min_word_in_pair::2
+int::max_word_in_pair::5
+//
+print::End of PARAMETERS.SWS
