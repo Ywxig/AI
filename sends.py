@@ -19,13 +19,13 @@ def main(message=[], user="None"):
     match_percentage = 0.78
     for i in message:
         
-        if ChatBot.is_word("погода", i) >= match_percentage:
+        if ChatBot.WordsOperations.is_word("погода", i) >= match_percentage:
             add = Water_sys.All(Read_.readLine("config.sws", "OWM-API-key"))
 
-        if ChatBot.is_word("найди", i) > match_percentage:
+        if ChatBot.WordsOperations.is_word("найди", i) > match_percentage:
            add = ChatBot.Search.Yandex( message)
 
-    respons = ChatBot.Generator.Chat.ChatCraft(message, "education/chatcraft.txt", iterabel_counts=44) + "\n" +  str(add)
+    respons = ChatBot.Generator.Chat.ChatCraft(message, "education/chatcraft.txt", iterabel_counts=64) + "\n" +  str(add)
     
     print("[Time of generation is] - " + str(time.time() - start))
     if respons == '' or respons == None:

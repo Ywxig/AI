@@ -1,39 +1,9 @@
 import random
-import pymorphy2
 import wikipedia
 import time
 from CuteON import Read_
+import pymorphy2
 
-
-class Search:
-
-    def Youtube(List):
-        message = " ".join(List)
-        dont_use_words = ["найди", "ютуб"]
-        arr = message.split("найди")
-        respons = []
-        for i in arr[1].split():
-            if i not in dont_use_words:
-                respons.append(i)
-
-        task = '+'.join(respons)
-        s = 'https://www.youtube.com/results?search_query=' + task
-        return s
-
-    def Yandex( List ):
-        message = " ".join(List)
-        dont_use_words = ["найди", "яндекс", "найти", "отыскать"]
-        for j in List:
-            if is_word(j, "найди") >= 0.51:
-                arr = message.split(j)
-                respons = []
-                for i in arr[1].split():
-                    if i not in dont_use_words:
-                        respons.append(i)       
-                task = '%20'.join(respons)
-                s = 'https://yandex.ru/yandsearch?clid=202826&text=' + task
-                return s
-    
 def Frequency(arr, item):
     count = 0
     for i in arr:
@@ -53,7 +23,7 @@ def get_prompt_key_words(file_propt, index_of_list_keywords=0):
 def Frequency_matrix(matrix, item, procent = 0.90):
     count = 0
     for i in matrix:
-        if is_word(item, i[0]) >= procent or is_word(item, i[1]) >= procent:
+        if WordsOperations.is_word(item, i[0]) >= procent or WordsOperations.is_word(item, i[1]) >= procent:
             count += 1
         else:
             pass
@@ -71,8 +41,8 @@ def Min_frequency(dict_ : dict) -> float:
 def Find_matrix_row(matrix, item, procent = 0.90):
     arr = []
     for i in matrix:
-        if is_word(item, i[0]) >= procent or is_word(item, i[1]) >= procent:
-            arr.append(i)
+        if WordsOperations.is_word(item, i[0]) >= procent or WordsOperations.is_word(item, i[1]) >= procent:
+            return i
         else:
             pass
     return arr
@@ -94,36 +64,86 @@ def Text_to_matrix(text, words_per_line):
         
     return matrix
 
-def Keywords(sentence) -> list:
-    morph = pymorphy2.MorphAnalyzer()
-    words = sentence.split()
-    keywords = []
-    for word in words:
-        parsed_word = morph.parse(word)[0]
-        if 'NOUN' in parsed_word.tag or 'ADJF' in parsed_word.tag:
-            keywords.append(word)
-    return keywords
-    
-def is_word(word_1, word_2):
-    """на сколько 1 похоже на 2"""
-    word_2 = list(word_2)
-    if len(word_2) < 1:
-        return 0
-    
-    count_repit_char = 0
-    for i in word_1:
-        try:
-            if i == word_2[word_1.index(i)]:
-                count_repit_char += 1
-        except:
-            break
+class WordsOperations():
 
-    return count_repit_char / len(list(word_2))
+    def Keywords(sentence) -> list:
+        morph = pymorphy2.MorphAnalyzer()
+        words = sentence.split()
+        keywords = []
+        for word in words:
+            parsed_word = morph.parse(word)[0]
+            if 'NOUN' in parsed_word.tag: #or 'ADJF' in parsed_word.tag:
+                keywords.append(word)
+        return keywords
+
+    def is_word(word_1 : str, word_2 : str) -> float:
+        """на сколько 1 похоже на 2"""
+        word_2 = list(word_2)
+        if len(word_2) < 1:
+            return 0
+
+        count_repit_char = 0
+        for i in word_1:
+            try:
+                if i == word_2[word_1.index(i)]:
+                    count_repit_char += 1
+            except:
+                break
+
+        return count_repit_char / len(list(word_2))
+
+class Tokens():
+
+    def GetTokenInMessage(file : str, message : list, procent = 0.65) -> list:
+        iner_data = []
+        # создаём массив слов который использован для генерации текста. Для избежания бредогенератора из дата сета выберем только те текстовые данные которые используются для ответов на сообщения
+        textdata = Read_.readAll(file)
+        for q in textdata:
+            count = 0
+            for i in q.split():
+                try:
+                    res = WordsOperations.is_word(message[count], i.split()[count])# res = результат на сколько слово из сообщений похоже на слово в ключе
+                    if res > procent:
+                        iner_data.append(textdata[q])
+                        count += 1
+                except:
+                    pass
+        return iner_data
+
+class Search:
+
+    def Youtube(List):
+        message = " ".join(List)
+        dont_use_words = ["найди", "ютуб"]
+        arr = message.split("найди")
+        respons = []
+        for i in arr[1].split():
+            if i not in dont_use_words:
+                respons.append(i)
+
+        task = '+'.join(respons)
+        s = 'https://www.youtube.com/results?search_query=' + task
+        return s
+
+    def Yandex( List ):
+        message = " ".join(List)
+        dont_use_words = ["найди", "яндекс", "найти", "отыскать"]
+        for j in List:
+            if WordsOperations.is_word(j, "найди") >= 0.51:
+                arr = message.split(j)
+                respons = []
+                for i in arr[1].split():
+                    if i not in dont_use_words:
+                        respons.append(i)       
+                task = '%20'.join(respons)
+                s = 'https://yandex.ru/yandsearch?clid=202826&text=' + task
+                return s
+    
 
 def cord_word(text, word_find, float_pass = 0.52):
     count = 0
     for i in text:
-        if is_word(i, word_find) >= float_pass:
+        if WordsOperations.is_word(i, word_find) >= float_pass:
             return count
         count += 1
 
@@ -131,23 +151,10 @@ class Generator:
 
     class Chat:
 
-        def ChatCraft(message : list, file_dataset : str, iterabel_counts = 44):
+        def ChatCraft(message : list, file_dataset : str, iterabel_counts = 64):
             text = []
 
-            iner_data = []
-
-            # создаём массив слов который использован для генерации текста. Для избежания бредогенератора из дата сета выберем только те текстовые данные которые используются для ответов на сообщения
-            textdata = Read_.readAll(file_dataset)
-            for q in textdata:
-                count = 0
-                for i in q.split():
-                    try:
-                        res = is_word(message[count], i.split()[count])# res = результат на сколько слово из сообщений похоже на слово в ключе
-                        if res > 0.65:
-                            iner_data.append(textdata[q])
-                            count += 1
-                    except:
-                        pass
+            iner_data = Tokens.GetTokenInMessage(file = file_dataset, message = message)
                     
             # Рассмотрим маасив текстовых данных как один текст. Создаём матрицу из текста и проверяем насколько пары слов из матрици всречаются на протежениие всего текста
             str_ = ". ".join(iner_data).split()
@@ -156,7 +163,7 @@ class Generator:
             for i in str_:
                 Freq = Frequency_matrix(matrix, i, procent=0.75)
                 chain_matrix_material[i] = Freq
-            keywords = Keywords(". ".join(iner_data))
+            keywords = WordsOperations.Keywords(". ".join(iner_data))
             if keywords == []:
                 text.append(random.choice(str_))
             else:
@@ -168,13 +175,22 @@ class Generator:
                 if "." in list(last_item_text):
                     break
                 rand = random.random()
-
-                if rand <= chain_matrix_material[last_item_text]:
-                    arr = Find_matrix_row(matrix, last_item_text, procent=0.75)
-                    for q in arr:
-                        for j in q:
-                            if j not in text:
+                rand2 = round(random.random())
+                if last_item_text != "":
+                    try:
+                        if rand2 > 0:
+                            arr = Find_matrix_row(matrix, last_item_text, procent=0.65)
+                            for j in matrix[matrix.index(arr) + 1]:
                                 text.append(j)
+
+                        if rand <= chain_matrix_material[last_item_text]:
+                            arr = [Find_matrix_row(matrix, last_item_text, procent=0.65)]
+                            for q in arr:
+                                for j in q:
+                                    if j not in text:
+                                        text.append(j)
+                    except:
+                        pass
             return " ".join(text)
                     
 
@@ -210,7 +226,7 @@ class Generator:
             try:
                 for i in message.split():
                     for q in list_wiki_call:
-                        if is_word(i, q) >= 0.6:
+                        if WordsOperations.is_word(i, q) >= 0.6:
 
                             ms = (message.split(i)[1]).split(".")[0]
 
@@ -227,14 +243,14 @@ class Generator:
                 content = Read_.readAll(file_for_hybrid)
 
                 for i in content:
-                    if is_word(message, i) >= match_percentage:
+                    if WordsOperations.is_word(message, i) >= match_percentage:
                         try:
                             ctx = content[i].split("||")
                             return random.choice(ctx)
                         except:
                             return content[i]             
 
-            Key_word = Keywords(message) + Keywords(prompt)
+            Key_word = WordsOperations.Keywords(message) + WordsOperations.Keywords(prompt)
             if file_mode == True:
                 text = (open(prompt, "r", encoding="utf-8").read()).split()
             else:
@@ -307,7 +323,7 @@ class Generator:
                     # Далия добавим слово которое идёт после слово которое мы взяли из сообщения
                     if random_cofficient3 <= chance_use_next_word:
                         for j in text:
-                            if is_word(j, random_key_word) <= match_percentage:
+                            if WordsOperations.is_word(j, random_key_word) <= match_percentage:
                                 try:
                                     sentens.append(text[cord_word(text, random_key_word)+1])
                                 except:
@@ -369,7 +385,7 @@ class Generator:
                             order=1,
                             length=5,
                              ):
-            keywords = Keywords(message)
+            keywords = WordsOperations.Keywords(message)
             words = text.split()
             markov_dict = {}
             # Создаем словарь цепей Маркова
