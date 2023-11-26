@@ -1,4 +1,4 @@
-from . import WordOperations
+from . import utils
 
 class Search:
 
@@ -19,7 +19,7 @@ class Search:
         message = " ".join(List)
         dont_use_words = ["найди", "яндекс", "найти", "отыскать"]
         for j in List:
-            if WordOperations.is_word(j, "найди") >= 0.51:
+            if utils.is_word(j, "найди") >= 0.51:
                 arr = message.split(j)
                 respons = []
                 for i in arr[1].split():

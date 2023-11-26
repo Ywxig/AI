@@ -1,9 +1,10 @@
-str::Token::ODM3MjQzMzEyNjk1ODAzOTQ1.GoMdjr.LGPg8WgVrQ2mEVPlxpR2iZ74Aq66iFEQy39jzw
-str::Text::education/text.txt
+str::Token::ODM3MjQzMzEyNjk1ODAzOTQ1.GTCwtp.yru-pzxiSnK31MiAaLCWqVVOUKMEHrw-HFzDgA
+file::Text::education/text.txt
 str::Version::Zoe 5.6
 str::Wather::OWM
 str::GitHub::https://GitHub.com
-file::AboutMe::aboutMe.txt
+file::AboutMe::readMe.md
 list::Developers::Ywxig
 str::PlayIn::Visual Studio Code...
 str::OWM-API-key::88c77e859289463928b17b24f2f7ea99
+str::comand_prefix::.

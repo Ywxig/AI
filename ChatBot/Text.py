@@ -1,4 +1,4 @@
-from . import WordOperations
+from . import utils
 from CuteON import Read_
 import random
 from . import LinkGen
@@ -8,9 +8,39 @@ import time
 def cord_word(text, word_find, float_pass = 0.52):
     count = 0
     for i in text:
-        if  WordOperations.is_word(i, word_find) >= float_pass:
+        if  utils.is_word(i, word_find) >= float_pass:
             return count
         count += 1
+
+
+def TextWiki(prompt = [],
+             set_languadge = "ru"):
+    text = []
+    block = []
+    wikipedia.set_lang(set_languadge)
+    wiki_data = wikipedia.summary(prompt)
+    wiki_page = wikipedia.page(prompt)
+
+    keyWords =  utils.Keywords(wiki_data)
+    
+    sentens = wiki_data.split(".")
+    for i in sentens:
+        item = i.split()
+        for q in item:
+            if q in keyWords:
+                text.append(i)
+    
+    arr = []
+
+    sentens = wiki_data.split()
+    for i in sentens:
+        if i not in arr:
+            arr.append(i)
+        else:
+            pass
+
+    print(len(wiki_data.split()) - len(" ".join(arr).split()))
+    return " ".join(arr)
 
 
 def Text(message, prompt,
@@ -41,7 +71,7 @@ def Text(message, prompt,
     try:
         for i in message.split():
             for q in list_wiki_call:
-                if  WordOperations.is_word(i, q) >= 0.6:
+                if  utils.is_word(i, q) >= 0.6:
                     ms = (message.split(i)[1]).split(".")[0]
                     wikipedia.set_lang(set_languadge)
                     wiki_data = wikipedia.summary(ms)
@@ -51,15 +81,15 @@ def Text(message, prompt,
     # если гиблиднасть включена, то алгоритм сверяет сообщение с тем что есть в базе если есть совпадение то с 0.5 шансом добавим в начало списка result
     if hybrid_generation == True:
         r = round(random.random())
-        content = Read_.readAll(file_for_hybrid)
+        content = Read_.Read_.readAll(file_for_hybrid)
         for i in content:
-            if  WordOperations.is_word(message, i) >= match_percentage:
+            if  utils.is_word(message, i) >= match_percentage:
                 try:
                     ctx = content[i].split("||")
                     return random.choice(ctx)
                 except:
                     return content[i]             
-    Key_word = WordOperations.Keywords(message) + WordOperations.Keywords(prompt)
+    Key_word = utils.Keywords(message) + utils.Keywords(prompt)
     if file_mode == True:
         text = (open(prompt, "r", encoding="utf-8").read()).split()
     else:
@@ -72,7 +102,7 @@ def Text(message, prompt,
         count_iterable = 0
         for i in ctx:
             for j in i.split():
-                if j in WordOperations.get_prompt_key_words(prompt) + list(Key_word):
+                if j in utils.get_prompt_key_words(prompt) + list(Key_word):
                     if add_random_sentens == True:
                         new_text.append(i)
                         new_text.append(random.choice(ctx))
@@ -107,7 +137,7 @@ def Text(message, prompt,
     respons = (" ".join(arr)).split()
     sentens = []
     for i in respons:
-        if WordOperations.Frequency(text, i) <= match_percentage:
+        if utils.Frequency(text, i) <= match_percentage:
             sentens.append(i)
     # Использование адоптивного размера результата
     if adaptive_respons_size == True:
@@ -131,7 +161,7 @@ def Text(message, prompt,
             # Далия добавим слово которое идёт после слово которое мы взяли из сообщения
             if random_cofficient3 <= chance_use_next_word:
                 for j in text:
-                    if  WordOperations.is_word(j, random_key_word) <= match_percentage:
+                    if  utils.is_word(j, random_key_word) <= match_percentage:
                         try:
                             sentens.append(text[cord_word(text, random_key_word)+1])
                         except:
@@ -189,7 +219,7 @@ def Marcov(  text : str,
                     order=1,
                     length=5,
                      ):
-    keywords = WordOperations.Keywords(message)
+    keywords = utils.Keywords(message)
     words = text.split()
     markov_dict = {}
     # Создаем словарь цепей Маркова
