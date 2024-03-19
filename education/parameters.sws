@@ -1,6 +1,4 @@
 bool::show_dict_PARAMETERS::False
-//
-//
 float::chance_choosing_full_pair::0.59
 float::chance_choosing_main_word::0.4
 float::chance_teleport::0.1
@@ -13,5 +11,3 @@ int::max_size_respons::5
 int::allowed_array_length::6
 int::min_word_in_pair::2
 int::max_word_in_pair::5
-//
-print::End of PARAMETERS.SWS
