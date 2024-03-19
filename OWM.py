@@ -33,10 +33,11 @@ class Water_sys:
         print(w2)
         return "В даный момент " + str(w.temperature('celsius')['temp']) + '°'
 
-    def All(self):
+    def All(self, country):
+
         owm = OWM('88c77e859289463928b17b24f2f7ea99')
         mgr = owm.weather_manager()
-        observation = mgr.weather_at_place('Молдова')
+        observation = mgr.weather_at_place(country)
         w = observation.weather
         w2 = w.temperature('celsius')['temp']
         print(w)

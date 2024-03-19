@@ -1,46 +1,55 @@
-import ChatBot
+from ChatBot import Chat, Text
+from ChatBot import LinkGen as link
+from ChatBot import utils as wo
+from ChatBot import initBot
 import time
 from OWM import Water_sys
 from CuteON import Read_
 
+def main(message : str =[], user="None", cfg : any ={}) -> str:
 
-
-
-def main(message=[], user="None"):
-
-    PARAMETERS = Read_.readAll("education/parameters.sws")
-
-    if PARAMETERS["show_dict_PARAMETERS"] == True:
-        print("[Parameters] - " + str(PARAMETERS))
-
+    respons = ""
     add = ""
     start = time.time()
     print( "[@"+ str(user) + "]" + " ".join(message) + time.strftime("{ %H:%M }"))
-    match_percentage = 0.78
+    match_percentage = 0.88
     for i in message:
         
-        if ChatBot.is_word("погода", i) >= match_percentage:
-            add = Water_sys.All(Read_.readLine("config.sws", "OWM-API-key"))
+        if wo.is_word("себе", i) > match_percentage:
+           add = "\n" + cfg["About"]["Bio"]
 
-        if ChatBot.is_word("найди", i) > match_percentage:
-           add = ChatBot.Search.Yandex( message)
+        if wo.is_word("такое", i) > match_percentage:
+           prompt = " ".join(message).split(i)[1]
+           add = "\n" + Text.TextWiki(prompt) 
 
-    respons = ChatBot.Generator.wandering_drunk(" ".join(message), "education/text.txt",
-                                                chance_choosing_full_pair=PARAMETERS["chance_choosing_full_pair"],
-                                                chance_choosing_main_word=PARAMETERS["chance_choosing_main_word"],
-                                                chance_teleport = PARAMETERS["chance_teleport"],
-                                                chance_use_message = PARAMETERS["chance_use_message"],
-                                                chance_use_next_word =PARAMETERS["chance_use_next_word"],
-                                                match_percentage =PARAMETERS["match_percentage"],
-                                                chance_add_to_banlist =PARAMETERS["chance_add_to_banlist"],
-                                                Probability_descent_for_use_message =PARAMETERS["Probability_descent_for_use_message"],
-                                                max_size_respons = PARAMETERS["max_size_respons"],
-                                                allowed_array_length = PARAMETERS["allowed_array_length"],
-                                                min_word_in_pair = PARAMETERS["min_word_in_pair"],
-                                                max_word_in_pair = PARAMETERS["max_word_in_pair"],
-                                                file_for_hybrid="education/hybrid.txt") + "\n" +  str(add)
+        if wo.is_word("сочинение", i) > match_percentage:
+            prompt = " ".join(message).split(i)[1]
+            add = Text.TextCraft(prompt.split(), "education/textcraft.txt")
+
+        if wo.is_word("погода", i) >= match_percentage:
+            count = 0
+            for j in message:
+                count += 1
+                if j == "в":
+                    add = Water_sys.All(Read_.Read_.readLine("config.sws", "OWM-API-key"), message[count + 1])
+                else:
+                     add = Water_sys.All(Read_.Read_.readLine("config.sws", "OWM-API-key"), "молдова")
+
+        if wo.is_word("найди", i) > match_percentage:
+           add = link.Search.Yandex( message)
+    try:
+        respons = Chat.ChatCraft(message, "education/chatcraft.txt") + "\n" +  str(add)
+    except:
+        respons = str(add)
     print("[Time of generation is] - " + str(time.time() - start))
     if respons == '' or respons == None:
         return "Я не знаю что сказать..."
     else:
        return respons
+
+if __name__ == "__main__":
+    BOT = initBot.init("Config.sws")
+    message = "None"
+    while " ".join(message) != "quit":
+        message = input("<user:> ").split()
+        print(main(message=message, user="None", cfg=BOT))
